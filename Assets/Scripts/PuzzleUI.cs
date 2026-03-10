@@ -35,7 +35,7 @@ public class PuzzleUI : MonoBehaviour
     
     private void Update()
     {
-        if (!PuzzleGameManager.Instance.isPaused && !PuzzleGameManager.Instance.isGameOver)
+        if (PuzzleGameManager.Instance != null && !PuzzleGameManager.Instance.isPaused && !PuzzleGameManager.Instance.isGameOver)
         {
             UpdateGameTime();
         }
@@ -100,7 +100,7 @@ public class PuzzleUI : MonoBehaviour
             pauseTitleText.text = pauseTitle;
         }
         
-        if (difficultyText != null)
+        if (difficultyText != null && PuzzleGameManager.Instance != null)
         {
             difficultyText.text = "难度: " + PuzzleGameManager.Instance.GetDifficultyName();
         }
@@ -144,12 +144,33 @@ public class PuzzleUI : MonoBehaviour
     {
         if (moveCountText != null)
         {
-            moveCountText.text = "移动: " + count;
+            moveCountText.text = "步数: " + count;
         }
     }
     
     public void UpdateWinInfo(float playTime, int moves)
     {
+        Transform timeInfo = winScreen != null ? winScreen.transform.Find("TimeInfo") : null;
+        Transform movesInfo = winScreen != null ? winScreen.transform.Find("MovesInfo") : null;
+        
+        if (timeInfo != null)
+        {
+            TextMeshProUGUI timeTextComponent = timeInfo.GetComponent<TextMeshProUGUI>();
+            if (timeTextComponent != null)
+            {
+                timeTextComponent.text = "用时: " + playTime.ToString("F0") + "秒";
+            }
+        }
+        
+        if (movesInfo != null)
+        {
+            TextMeshProUGUI movesTextComponent = movesInfo.GetComponent<TextMeshProUGUI>();
+            if (movesTextComponent != null)
+            {
+                movesTextComponent.text = "步数: " + moves;
+            }
+        }
+        
         if (subtitleText != null)
         {
             subtitleText.text = $"完成用时: {playTime:F1}秒\n移动次数: {moves}";

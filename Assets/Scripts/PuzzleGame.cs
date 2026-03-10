@@ -205,13 +205,11 @@ public class PuzzleGame : MonoBehaviour
 
     public void OnPieceDropped(PuzzlePiece piece)
     {
-        Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            puzzleContainer,
-            Input.mousePosition,
-            null,
-            out localPoint
-        );
+        RectTransform pieceRect = piece.GetComponent<RectTransform>();
+        
+        pieceRect.SetParent(puzzleContainer, false);
+        
+        Vector2 localPoint = pieceRect.anchoredPosition;
 
         int targetRow = GetRowFromPosition(localPoint.y);
         int targetCol = GetColFromPosition(localPoint.x);
@@ -276,6 +274,9 @@ public class PuzzleGame : MonoBehaviour
         RectTransform rect1 = piece1.GetComponent<RectTransform>();
         RectTransform rect2 = piece2.GetComponent<RectTransform>();
         
+        rect1.SetParent(puzzleContainer, false);
+        rect2.SetParent(puzzleContainer, false);
+        
         SetPiecePosition(rect1, piece1.currentRow, piece1.currentCol);
         SetPiecePosition(rect2, piece2.currentRow, piece2.currentCol);
         
@@ -289,6 +290,7 @@ public class PuzzleGame : MonoBehaviour
     {
         piece.SetCurrentPosition(row, col);
         RectTransform rectTransform = piece.GetComponent<RectTransform>();
+        rectTransform.SetParent(puzzleContainer, false);
         SetPiecePosition(rectTransform, row, col);
     }
 

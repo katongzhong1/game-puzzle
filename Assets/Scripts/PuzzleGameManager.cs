@@ -109,13 +109,27 @@ public class PuzzleGameManager : MonoBehaviour
         
         if (puzzleGame != null)
         {
-            puzzleGame.gridSize = 3 + currentDifficulty;
+            switch (currentDifficulty)
+            {
+                case 1:
+                    puzzleGame.gridSize = 3;
+                    break;
+                case 2:
+                    puzzleGame.gridSize = 5;
+                    break;
+                case 3:
+                    puzzleGame.gridSize = 7;
+                    break;
+                default:
+                    puzzleGame.gridSize = 5;
+                    break;
+            }
             puzzleGame.ResetGame();
         }
         
         RestartGame();
         
-        Debug.Log("难度已切换到: " + currentDifficulty);
+        Debug.Log("难度已切换到: " + currentDifficulty + " (" + puzzleGame.gridSize + "x" + puzzleGame.gridSize + ")");
     }
     
     public void PauseGame()
@@ -166,7 +180,13 @@ public class PuzzleGameManager : MonoBehaviour
     
     public int GetGridSize()
     {
-        return 3 + currentDifficulty;
+        switch (currentDifficulty)
+        {
+            case 1: return 3;
+            case 2: return 5;
+            case 3: return 7;
+            default: return 5;
+        }
     }
     
     public string GetDifficultyName()
@@ -174,8 +194,8 @@ public class PuzzleGameManager : MonoBehaviour
         switch(currentDifficulty)
         {
             case 1: return "简单 (3x3)";
-            case 2: return "中等 (4x4)";
-            case 3: return "困难 (5x5)";
+            case 2: return "中等 (5x5)";
+            case 3: return "困难 (7x7)";
             default: return "简单 (3x3)";
         }
     }
