@@ -39,7 +39,6 @@ Thumbs.db
 *.exe
 *.pdb
 *.ilk
-*.meta
 *.obj
 *.pch
 *.pdb
